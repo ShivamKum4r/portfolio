@@ -145,7 +145,7 @@ export function SkillsSection() {
       {/* Experience highlights */}
       <div className="w-full mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { value: "2.5+", label: "Years Experience" },
+          { value: "Fresher", label: "Years Experience" },
           { value: "10+", label: "Projects" },
           { value: "5+", label: "AI Tools Built" },
           { value: "15+", label: "Technologies" },
