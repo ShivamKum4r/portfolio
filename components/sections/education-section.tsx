@@ -33,10 +33,10 @@ const education: Education[] = [
   },
   {
     institution: "Higher Secondary Education",
-    institutionLink: "",
-    link: "",
+    institutionLink: "https://andal.kvs.ac.in/en/",
+    link: "https://andal.kvs.ac.in/en/",
     degree: "12th Grade - Science (PCM)",
-    duration: "2020 - 2022",
+    duration: "2021",
     description: [
       "Completed higher secondary education with Physics, Chemistry, and Mathematics as core subjects",
       "Built strong foundation in mathematical concepts and scientific principles that support current engineering studies",
@@ -46,10 +46,10 @@ const education: Education[] = [
   },
   {
     institution: "Secondary Education",
-    institutionLink: "",
-    link: "",
+    institutionLink: "https://andal.kvs.ac.in/en/",
+    link: "https://andal.kvs.ac.in/en/",
     degree: "10th Grade",
-    duration: "2018 - 2020",
+    duration: "2019",
     description: [
       "Completed secondary education with focus on science and mathematics",
       "Developed fundamental knowledge in core subjects and academic discipline",
