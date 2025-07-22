@@ -29,10 +29,10 @@ export function RandomBackground() {
     
     setBackgroundImage(getRandomImage());
 
-    // Change background every 30 seconds
+    // Change background every 7 seconds
     const interval = setInterval(() => {
       setBackgroundImage(getRandomImage());
-    }, 30000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, []);
