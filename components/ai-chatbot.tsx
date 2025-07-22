@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, X, Bot, User, GamepadIcon, Download } from         addBotMessage(`🔽 **Manual Download Option:**\n\nIf the automatic download didn&apos;t work, click the button below:`);lucide-react";
+import { MessageCircle, X, Bot, User, GamepadIcon, Download } from "lucide-react";
 
 interface Message {
   id: string;
