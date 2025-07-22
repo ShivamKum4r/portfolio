@@ -411,7 +411,7 @@ export function AIChatbot() {
 
       {/* Chat window - Responsive */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 left-4 top-4 z-50 sm:bottom-24 sm:right-6 sm:left-auto sm:top-auto sm:w-96 sm:h-96 bg-black bg-opacity-85 border border-gray-500 border-opacity-30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
+        <div className="fixed bottom-4 right-4 w-80 h-96 z-50 sm:bottom-24 sm:right-6 sm:w-96 sm:h-96 bg-black bg-opacity-85 border border-gray-500 border-opacity-30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
           {/* Header - Responsive */}
           <div className="p-3 sm:p-4 border-b border-gray-500 border-opacity-20 flex items-center gap-2 sm:gap-3 bg-black bg-opacity-50 relative">
             <div className="relative">

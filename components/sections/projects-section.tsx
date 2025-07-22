@@ -37,7 +37,7 @@ const projects: Project[] = [
     description:
       "Advanced voice-controlled desktop assistant with capabilities including answering questions, playing music, system shutdown, news fetching, and web automation. Features natural language processing and speech recognition for seamless user interaction.",
     imageUrl: "/projects/ethan-assistant.jpg",
-    videoUrl: "/projects/ethan-assistant.mp4",
+    videoUrl: "", // Removed missing video file
     tags: ["Python", "OpenAI API", "SpeechRecognition", "Selenium", "VLC"],
     link: "",
     githubLink: "https://github.com/ShivamKum4r/Ethan",
