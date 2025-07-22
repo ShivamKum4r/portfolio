@@ -36,7 +36,7 @@ export function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hi! I&apos;m Shivam&apos;s AI assistant. I can help you learn about him, play games, provide his resume, or even show you recursion in action! Try asking me something!",
+      content: "Hi! I'm Shivam's AI assistant. I can help you learn about him, play games, provide his resume, or even show you recursion in action! Try asking me something!",
       sender: "bot",
       timestamp: new Date(),
     },
