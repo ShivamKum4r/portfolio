@@ -419,7 +419,7 @@ export function AIChatbot() {
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
             <div>
-              <h3 className="font-semibold text-white text-sm">Shivam's AI Assistant</h3>
+              <h3 className="font-semibold text-white text-sm">Shivam&apos;s AI Assistant</h3>
               <p className="text-xs text-gray-400">Online & Ready to Help</p>
             </div>
             <div className="ml-auto flex gap-1">
