@@ -359,7 +359,7 @@ export function AIChatbot() {
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 h-96 bg-black/85 backdrop-blur-xl border border-gray-500/30 rounded-2xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed bottom-24 right-6 z-50 w-96 h-96 bg-black/85 backdrop-blur-xl border border-gray-500/30 rounded-2xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
           {/* Header */}
           <div className="p-4 border-b border-gray-500/20 flex items-center gap-3 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-md relative">
             <div className="relative">
@@ -378,11 +378,11 @@ export function AIChatbot() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+          <div className="flex-1 p-4 overflow-y-auto space-y-3">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`}
+                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} transition-all duration-300 ease-in-out`}
               >
                 <div
                   className={`max-w-[80%] p-3 rounded-2xl backdrop-blur-md transition-all duration-200 hover:scale-[1.02] ${
