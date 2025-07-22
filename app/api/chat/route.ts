@@ -58,7 +58,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function generateResponse(message: string, info: any): string {
+function generateResponse(message: string, info: {
+  name: string;
+  title: string;
+  experience: string;
+  location: string;
+  education: string;
+  skills: string[];
+  projects: Array<{
+    name: string;
+    description: string;
+    tech: string[];
+    link?: string;
+  }>;
+  interests: string[];
+  goals: string;
+  contact: string;
+}): string {
   // Greetings
   if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
     return `Hello! 👋 I'm ${info.name}, a ${info.title}. I'm excited to chat with you! Feel free to ask me about my background, skills, projects, or anything else you'd like to know.`;

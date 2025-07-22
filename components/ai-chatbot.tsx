@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, X, Bot, User, GamepadIcon, Download } from "lucide-react";
+import { MessageCircle, X, Bot, User, GamepadIcon, Download } from         addBotMessage(`🔽 **Manual Download Option:**\n\nIf the automatic download didn&apos;t work, click the button below:`);lucide-react";
 
 interface Message {
   id: string;
@@ -36,7 +36,7 @@ export function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hi! I'm Shivam's AI assistant. I can help you learn about him, play games, provide his resume, or even show you recursion in action! Try asking me something!",
+      content: "Hi! I&apos;m Shivam&apos;s AI assistant. I can help you learn about him, play games, provide his resume, or even show you recursion in action! Try asking me something!",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -51,29 +51,6 @@ export function AIChatbot() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // API call for natural conversation
-  const callChatAPI = async (message: string): Promise<string> => {
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message }),
-      });
-
-      if (!response.ok) {
-        throw new Error('API call failed');
-      }
-
-      const data = await response.json();
-      return data.response;
-    } catch (error) {
-      console.error('Chat API error:', error);
-      return "I'm sorry, I'm having trouble connecting to my knowledge base right now. Please try asking about my games, resume, or basic information!";
-    }
-  };
-
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -81,7 +58,7 @@ export function AIChatbot() {
   const games: Game[] = [
     {
       name: "Number Guessing Game",
-      description: "I'll think of a number between 1-100, try to guess it!",
+      description: "I&apos;ll think of a number between 1-100, try to guess it!",
       action: () => startNumberGame(),
     },
     {
@@ -91,7 +68,7 @@ export function AIChatbot() {
     },
     {
       name: "Riddle Challenge",
-      description: "I'll give you riddles to solve!",
+      description: "I&apos;ll give you riddles to solve!",
       action: () => startRiddleGame(),
     },
   ];
@@ -100,7 +77,7 @@ export function AIChatbot() {
     const number = Math.floor(Math.random() * 100) + 1;
     setCurrentGame("number");
     setGameState({ targetNumber: number, attempts: 0 });
-    addBotMessage(`I'm thinking of a number between 1 and 100. Can you guess it? You have unlimited attempts!`);
+    addBotMessage(`I&apos;m thinking of a number between 1 and 100. Can you guess it? You have unlimited attempts!`);
   };
 
   const startRPSGame = () => {
@@ -112,14 +89,14 @@ export function AIChatbot() {
   const startRiddleGame = () => {
     const riddles = [
       { question: "What has keys but no locks, space but no room, and you can enter but not go inside?", answer: "keyboard", hint: "You use this to type!" },
-      { question: "I'm not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", answer: "fire", hint: "It's hot and bright!" },
-      { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It's a letter!" },
+      { question: "I&apos;m not alive, but I grow; I don&apos;t have lungs, but I need air; I don&apos;t have a mouth, but water kills me. What am I?", answer: "fire", hint: "It&apos;s hot and bright!" },
+      { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It&apos;s a letter!" },
       { question: "What has hands but cannot hold anything?", answer: "clock", hint: "It tells time!" },
       { question: "What gets wet while drying?", answer: "towel", hint: "You use it after a shower!" },
       { question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", answer: "map", hint: "You use it for navigation!" },
       { question: "What can travel around the world while staying in a corner?", answer: "stamp", hint: "You put it on letters!" },
       { question: "What has one eye but cannot see?", answer: "needle", hint: "Used for sewing!" },
-      { question: "I'm tall when I'm young, and short when I'm old. What am I?", answer: "candle", hint: "It gives light and melts!" },
+      { question: "I&apos;m tall when I&apos;m young, and short when I&apos;m old. What am I?", answer: "candle", hint: "It gives light and melts!" },
       { question: "What goes up but never comes down?", answer: "age", hint: "It increases every year!" }
     ];
     const riddle = riddles[Math.floor(Math.random() * riddles.length)];
@@ -209,7 +186,7 @@ export function AIChatbot() {
       let playerWins = false;
       
       if (lowerInput === botChoice) {
-        result = "It's a tie!";
+        result = "It&apos;s a tie!";
         resultEmoji = "🤝";
       } else if (
         (lowerInput === "rock" && botChoice === "scissors") ||
@@ -225,7 +202,7 @@ export function AIChatbot() {
       }
 
       const newPlayerScore = (gameState.playerScore || 0) + (playerWins ? 1 : 0);
-      const newBotScore = (gameState.botScore || 0) + (!playerWins && result !== "It's a tie!" ? 1 : 0);
+      const newBotScore = (gameState.botScore || 0) + (!playerWins && result !== "It&apos;s a tie!" ? 1 : 0);
       const currentRound = gameState.round || 1;
 
       // Battle visualization
@@ -267,14 +244,14 @@ export function AIChatbot() {
         setTimeout(() => {
           const riddles = [
             { question: "What has keys but no locks, space but no room, and you can enter but not go inside?", answer: "keyboard", hint: "You use this to type!" },
-            { question: "I'm not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", answer: "fire", hint: "It's hot and bright!" },
-            { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It's a letter!" },
+            { question: "I&apos;m not alive, but I grow; I don&apos;t have lungs, but I need air; I don&apos;t have a mouth, but water kills me. What am I?", answer: "fire", hint: "It&apos;s hot and bright!" },
+            { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It&apos;s a letter!" },
             { question: "What has hands but cannot hold anything?", answer: "clock", hint: "It tells time!" },
             { question: "What gets wet while drying?", answer: "towel", hint: "You use it after a shower!" },
             { question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", answer: "map", hint: "You use it for navigation!" },
             { question: "What can travel around the world while staying in a corner?", answer: "stamp", hint: "You put it on letters!" },
             { question: "What has one eye but cannot see?", answer: "needle", hint: "Used for sewing!" },
-            { question: "I'm tall when I'm young, and short when I'm old. What am I?", answer: "candle", hint: "It gives light and melts!" },
+            { question: "I&apos;m tall when I&apos;m young, and short when I&apos;m old. What am I?", answer: "candle", hint: "It gives light and melts!" },
             { question: "What goes up but never comes down?", answer: "age", hint: "It increases every year!" }
           ];
           const newRiddle = riddles[Math.floor(Math.random() * riddles.length)];
@@ -290,14 +267,14 @@ export function AIChatbot() {
           setTimeout(() => {
             const riddles = [
               { question: "What has keys but no locks, space but no room, and you can enter but not go inside?", answer: "keyboard", hint: "You use this to type!" },
-              { question: "I'm not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", answer: "fire", hint: "It's hot and bright!" },
-              { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It's a letter!" },
+              { question: "I&apos;m not alive, but I grow; I don&apos;t have lungs, but I need air; I don&apos;t have a mouth, but water kills me. What am I?", answer: "fire", hint: "It&apos;s hot and bright!" },
+              { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m", hint: "It&apos;s a letter!" },
               { question: "What has hands but cannot hold anything?", answer: "clock", hint: "It tells time!" },
               { question: "What gets wet while drying?", answer: "towel", hint: "You use it after a shower!" },
               { question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", answer: "map", hint: "You use it for navigation!" },
               { question: "What can travel around the world while staying in a corner?", answer: "stamp", hint: "You put it on letters!" },
               { question: "What has one eye but cannot see?", answer: "needle", hint: "Used for sewing!" },
-              { question: "I'm tall when I'm young, and short when I'm old. What am I?", answer: "candle", hint: "It gives light and melts!" },
+              { question: "I&apos;m tall when I&apos;m young, and short when I&apos;m old. What am I?", answer: "candle", hint: "It gives light and melts!" },
               { question: "What goes up but never comes down?", answer: "age", hint: "It increases every year!" }
             ];
             const newRiddle = riddles[Math.floor(Math.random() * riddles.length)];
