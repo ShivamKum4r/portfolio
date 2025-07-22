@@ -12,15 +12,12 @@ import {
 } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import {
-  FaCss3,
   FaDocker,
   FaGitAlt,
   FaGithub,
-  FaHtml5,
   FaNodeJs,
   FaPython,
   FaReact,
-  FaCode,
   FaServer
 } from "react-icons/fa";
 import {
