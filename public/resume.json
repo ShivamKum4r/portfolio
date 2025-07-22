@@ -1,0 +1,41 @@
+
+{
+  "personalInfo": {
+    "name": "Shivam Kumar",
+    "title": "Machine Learning & Full Stack Developer",
+    "email": "sk0255980@gmail.com",
+    "location": "Asansol, West Bengal, India",
+    "portfolio": "https://shivam.tech"
+  },
+  "education": {
+    "degree": "B.Tech in Electronics and Communication Engineering",
+    "institution": "Asansol Engineering College",
+    "graduationYear": "2026",
+    "status": "Current Student"
+  },
+  "skills": {
+    "programming": ["Python", "TypeScript", "JavaScript", "C++"],
+    "frameworks": ["Next.js", "React", "Node.js", "FastAPI", "Streamlit"],
+    "aiml": ["PyTorch", "TensorFlow", "Scikit-learn", "Computer Vision", "NLP", "GCN"],
+    "styling": ["TailwindCSS", "CSS3", "HTML5"],
+    "tools": ["Git", "Docker", "AWS", "Vercel"],
+    "databases": ["MongoDB", "PostgreSQL", "SQLite"]
+  },
+  "projects": [
+    {
+      "title": "Drug Toxicity Prediction Dashboard",
+      "description": "Built a predictive dashboard with fingerprint-based MLP and Graph Convolutional Network (GCN) models for SMILES molecular inputs.",
+      "technologies": ["Streamlit", "PyTorch", "GCN", "RDKit", "Scikit-learn", "Python"],
+      "link": "https://huggingface.co/spaces/ShivamKum4r/Drug-Toxicity-Prediction",
+      "github": "https://github.com/ShivamKum4r/drug-toxicity-dashboard"
+    },
+    {
+      "title": "Ethan - Voice Assistant",
+      "description": "Advanced voice-controlled desktop assistant with capabilities including answering questions, playing music, system automation, and web control.",
+      "technologies": ["Python", "OpenAI API", "SpeechRecognition", "Selenium", "VLC"],
+      "github": "https://github.com/ShivamKum4r/Ethan"
+    }
+  ],
+  "interests": ["Machine Learning", "AI Research", "Web Development", "Cricket", "Football", "Anime", "Open Source"],
+  "summary": "Passionate B.Tech student specializing in ML and full-stack development. Experienced in building intelligent systems, from predictive modeling in bioinformatics to voice-controlled assistants and recommendation engines. Strong foundation in modern web technologies and AI/ML frameworks."
+}
