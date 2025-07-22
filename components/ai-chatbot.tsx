@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, X, Bot, User, GamepadIcon, FileText, Download } from "lucide-react";
+import { MessageCircle, X, Bot, User, GamepadIcon, Download } from "lucide-react";
 
 interface Message {
   id: string;
@@ -17,6 +17,20 @@ interface Game {
   action: () => void;
 }
 
+interface GameState {
+  targetNumber?: number;
+  attempts?: number;
+  playerScore?: number;
+  botScore?: number;
+  round?: number;
+  currentRiddle?: {
+    question: string;
+    answer: string;
+    hint: string;
+  };
+  riddleCount?: number;
+}
+
 export function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -29,12 +43,35 @@ export function AIChatbot() {
   ]);
   const [inputValue, setInputValue] = useState("");
   const [currentGame, setCurrentGame] = useState<string | null>(null);
-  const [gameState, setGameState] = useState<any>({});
+  const [gameState, setGameState] = useState<GameState>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom whenever messages change
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // API call for natural conversation
+  const callChatAPI = async (message: string): Promise<string> => {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API call failed');
+      }
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.error('Chat API error:', error);
+      return "I'm sorry, I'm having trouble connecting to my knowledge base right now. Please try asking about my games, resume, or basic information!";
+    }
   };
 
   useEffect(() => {
@@ -138,12 +175,12 @@ export function AIChatbot() {
         return;
       }
 
-      const newAttempts = gameState.attempts + 1;
+      const newAttempts = (gameState.attempts || 0) + 1;
       if (guess === gameState.targetNumber) {
         addBotMessage(`🎉 Congratulations! You guessed it in ${newAttempts} attempts! The number was ${gameState.targetNumber}.`);
         setCurrentGame(null);
         setGameState({});
-      } else if (guess < gameState.targetNumber) {
+      } else if (guess < (gameState.targetNumber || 0)) {
         setGameState({ ...gameState, attempts: newAttempts });
         addBotMessage(`Too low! Try a higher number. Attempts: ${newAttempts}`);
       } else {
@@ -152,7 +189,7 @@ export function AIChatbot() {
       }
     } else if (currentGame === "rps") {
       if (lowerInput === "quit" || lowerInput === "exit" || lowerInput === "stop") {
-        addBotMessage(`🎮 **Rock Paper Scissors Ended!**\n\n📊 **Final Score:**\nYou: ${gameState.playerScore} | Me: ${gameState.botScore}\n\nThanks for the epic battle! ⚔️`);
+        addBotMessage(`🎮 **Rock Paper Scissors Ended!**\n\n📊 **Final Score:**\nYou: ${gameState.playerScore || 0} | Me: ${gameState.botScore || 0}\n\nThanks for the epic battle! ⚔️`);
         setCurrentGame(null);
         setGameState({});
         return;
@@ -187,8 +224,8 @@ export function AIChatbot() {
         resultEmoji = "🤖";
       }
 
-      const newPlayerScore = gameState.playerScore + (playerWins ? 1 : 0);
-      const newBotScore = gameState.botScore + (!playerWins && result !== "It's a tie!" ? 1 : 0);
+      const newPlayerScore = (gameState.playerScore || 0) + (playerWins ? 1 : 0);
+      const newBotScore = (gameState.botScore || 0) + (!playerWins && result !== "It's a tie!" ? 1 : 0);
       const currentRound = gameState.round || 1;
 
       // Battle visualization
@@ -203,25 +240,27 @@ export function AIChatbot() {
         setCurrentGame(null);
         setGameState({});
       } else {
-        const nextRound = currentRound + 1;
+        const nextRound = (currentRound || 1) + 1;
         setGameState({ playerScore: newPlayerScore, botScore: newBotScore, round: nextRound });
         addBotMessage(`🎮 **Round ${nextRound}** - Ready for the next battle?\n\nChoose your weapon:\n🪨 **rock** | 📄 **paper** | ✂️ **scissors**\n\nType 'quit' to forfeit the championship!`);
       }
     } else if (currentGame === "riddle") {
       if (lowerInput === "quit" || lowerInput === "exit" || lowerInput === "stop") {
-        addBotMessage(`🎮 **Riddle Challenge Ended!**\n\nThanks for playing! You solved ${gameState.riddleCount} riddle${gameState.riddleCount !== 1 ? 's' : ''}! 🌟\n\nFeel free to start a new game anytime!`);
+        addBotMessage(`🎮 **Riddle Challenge Ended!**\n\nThanks for playing! You solved ${gameState.riddleCount || 0} riddle${(gameState.riddleCount || 0) !== 1 ? 's' : ''}! 🌟\n\nFeel free to start a new game anytime!`);
         setCurrentGame(null);
         setGameState({});
         return;
       }
 
       if (lowerInput === "hint") {
-        addBotMessage(`💡 **Hint:** ${gameState.currentRiddle.hint}\n\nNow try to guess the answer!`);
+        if (gameState.currentRiddle?.hint) {
+          addBotMessage(`💡 **Hint:** ${gameState.currentRiddle.hint}\n\nNow try to guess the answer!`);
+        }
         return;
       }
 
-      if (lowerInput === gameState.currentRiddle.answer.toLowerCase()) {
-        const newRiddleCount = gameState.riddleCount + 1;
+      if (gameState.currentRiddle && lowerInput === gameState.currentRiddle.answer.toLowerCase()) {
+        const newRiddleCount = (gameState.riddleCount || 0) + 1;
         addBotMessage(`🎉 **Correct!** You solved the riddle!\n\n✨ Riddles solved: ${newRiddleCount}`);
         
         // Start a new riddle
@@ -243,9 +282,9 @@ export function AIChatbot() {
           addBotMessage(`🧩 **Next Riddle!**\n\n*${newRiddle.question}*\n\nYou have 3 attempts! Type 'hint' for a clue or 'quit' to stop.`);
         }, 2000);
       } else {
-        const newAttempts = gameState.attempts + 1;
+        const newAttempts = (gameState.attempts || 0) + 1;
         if (newAttempts >= 3) {
-          addBotMessage(`❌ **Out of attempts!** The answer was: **${gameState.currentRiddle.answer}**\n\nBetter luck with the next riddle! 🍀`);
+          addBotMessage(`❌ **Out of attempts!** The answer was: **${gameState.currentRiddle?.answer}**\n\nBetter luck with the next riddle! 🍀`);
           
           // Start a new riddle after revealing answer
           setTimeout(() => {
@@ -271,6 +310,29 @@ export function AIChatbot() {
           addBotMessage(`❌ Not quite right! You have ${attemptsLeft} attempt${attemptsLeft > 1 ? 's' : ''} left.\n\nTry again, or type 'hint' for a clue! 🤔`);
         }
       }
+    }
+  };
+
+  // API integration for natural conversation
+  const handleNaturalConversation = async (message: string) => {
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from API');
+      }
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.error('API Error:', error);
+      return "I'm having trouble processing that right now. Could you try asking about my projects, skills, or maybe play a game instead?";
     }
   };
 
@@ -346,7 +408,10 @@ export function AIChatbot() {
         addBotMessage("🎉 **Recursion achieved!** A new portfolio instance has opened! You can keep clicking recursion for infinite depth... just like a true recursive function! 💫\n\n*Warning: May cause existential questions about reality! 😄*");
       }, 3000);
     } else {
-      addBotMessage("That's an interesting question! I can help you with information about Shivam's projects, skills, experience, or his resume. I can also play games with you or show you recursion in action! What would you like to know more about?");
+      // Use API for natural conversation
+      handleNaturalConversation(inputValue).then(response => {
+        addBotMessage(response);
+      });
     }
 
     setInputValue("");
