@@ -22,13 +22,24 @@ export function RandomBackground() {
   const [backgroundImage, setBackgroundImage] = useState("");
 
   useEffect(() => {
-    const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-    setBackgroundImage(randomImage);
+    // Set initial random background
+    const getRandomImage = () => {
+      return backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+    };
+    
+    setBackgroundImage(getRandomImage());
+
+    // Change background every 30 seconds
+    const interval = setInterval(() => {
+      setBackgroundImage(getRandomImage());
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div 
-      className="fixed inset-0 z-[-1] opacity-10 dark:opacity-5"
+      className="fixed inset-0 z-[-1] opacity-10 dark:opacity-5 transition-all duration-1000 ease-in-out"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",

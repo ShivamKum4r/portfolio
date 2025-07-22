@@ -76,7 +76,7 @@ export function AIChatbot() {
 
   const addBotMessage = (content: string) => {
     const newMessage: Message = {
-      id: Date.now().toString(),
+      id: `bot-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       content,
       sender: "bot",
       timestamp: new Date(),
@@ -86,7 +86,7 @@ export function AIChatbot() {
 
   const addUserMessage = (content: string) => {
     const newMessage: Message = {
-      id: Date.now().toString(),
+      id: `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       content,
       sender: "user",
       timestamp: new Date(),
