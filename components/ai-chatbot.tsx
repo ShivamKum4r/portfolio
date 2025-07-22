@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MessageCircle, X, Bot, User, GamepadIcon, FileText, Download } from "lucide-react";
 
 interface Message {
@@ -30,6 +30,16 @@ export function AIChatbot() {
   const [inputValue, setInputValue] = useState("");
   const [currentGame, setCurrentGame] = useState<string | null>(null);
   const [gameState, setGameState] = useState<any>({});
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to bottom whenever messages change
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const games: Game[] = [
     {
@@ -347,21 +357,21 @@ export function AIChatbot() {
       {/* Chat toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-black/80 backdrop-blur-md hover:bg-black/90 text-white border border-gray-500/50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-black/50 group"
+        className="fixed bottom-6 right-6 z-50 p-4 bg-black bg-opacity-80 hover:bg-opacity-90 text-white border border-gray-500 border-opacity-50 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group"
       >
         <div className="relative">
           {isOpen ? <X size={24} className="transition-transform duration-200 group-hover:rotate-90" /> : <MessageCircle size={24} className="transition-transform duration-200 group-hover:scale-110" />}
           {!isOpen && (
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse border-2 border-black/80"></div>
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse border-2 border-black border-opacity-80"></div>
           )}
         </div>
       </button>
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 h-96 bg-black/85 backdrop-blur-xl border border-gray-500/30 rounded-2xl shadow-2xl shadow-black/50 flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
+        <div className="fixed bottom-24 right-6 z-50 w-96 h-96 bg-black bg-opacity-85 border border-gray-500 border-opacity-30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
           {/* Header */}
-          <div className="p-4 border-b border-gray-500/20 flex items-center gap-3 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-md relative">
+          <div className="p-4 border-b border-gray-500 border-opacity-20 flex items-center gap-3 bg-black bg-opacity-50 relative">
             <div className="relative">
               <Bot className="text-gray-300" size={20} />
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -385,10 +395,10 @@ export function AIChatbot() {
                 className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} transition-all duration-300 ease-in-out`}
               >
                 <div
-                  className={`max-w-[80%] p-3 rounded-2xl backdrop-blur-md transition-all duration-200 hover:scale-[1.02] ${
+                  className={`max-w-[80%] p-3 rounded-2xl transition-all duration-200 hover:scale-105 ${
                     message.sender === "user"
-                      ? "bg-gradient-to-br from-black/70 to-black/50 text-white border border-gray-500/30 shadow-lg"
-                      : "bg-gradient-to-br from-black/50 to-black/30 text-gray-100 border border-gray-500/20 shadow-lg"
+                      ? "bg-black bg-opacity-70 text-white border border-gray-500 border-opacity-30 shadow-lg"
+                      : "bg-black bg-opacity-50 text-gray-100 border border-gray-500 border-opacity-20 shadow-lg"
                   }`}
                 >
                   <div className="flex items-start gap-2">
@@ -413,7 +423,7 @@ export function AIChatbot() {
                           link.click();
                           document.body.removeChild(link);
                         }}
-                        className="flex items-center gap-2 mx-auto px-4 py-2 bg-gradient-to-r from-black/70 to-black/50 hover:from-black/80 hover:to-black/60 backdrop-blur-md text-white border border-gray-500/30 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl group"
+                        className="flex items-center gap-2 mx-auto px-4 py-2 bg-black bg-opacity-60 hover:bg-opacity-80 text-white border border-gray-500 border-opacity-30 rounded-xl text-sm font-medium transition-all duration-200 hover:scale-105 shadow-lg group"
                       >
                         <Download size={16} className="group-hover:animate-bounce" />
                         Download Resume PDF
@@ -423,10 +433,12 @@ export function AIChatbot() {
                 </div>
               </div>
             ))}
+            {/* Invisible div to scroll to */}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-500/20 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-md">
+          <div className="p-4 border-t border-gray-500 border-opacity-20 bg-black bg-opacity-50">
             <div className="flex flex-col gap-3">
               <div className="relative">
                 <input
@@ -435,7 +447,7 @@ export function AIChatbot() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                   placeholder="Ask me about Shivam or let's play a game..."
-                  className="w-full p-3 pr-12 text-sm border border-gray-500/30 rounded-xl bg-black/60 backdrop-blur-md text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400/50 focus:border-gray-400/50 transition-all duration-200 shadow-inner"
+                  className="w-full p-3 pr-12 text-sm border border-gray-500 border-opacity-30 rounded-xl bg-black bg-opacity-60 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 focus:border-gray-400 focus:border-opacity-50 transition-all duration-200"
                 />
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -446,7 +458,7 @@ export function AIChatbot() {
                   onClick={() => {
                     handleResumeRequest();
                   }}
-                  className="flex-1 px-3 py-2.5 bg-gradient-to-r from-black/70 to-black/50 hover:from-black/80 hover:to-black/60 backdrop-blur-md text-white border border-gray-500/30 rounded-xl text-xs transition-all duration-200 hover:scale-105 flex items-center justify-center gap-1 shadow-lg group"
+                  className="flex-1 px-3 py-2.5 bg-black bg-opacity-70 hover:bg-opacity-80 text-white border border-gray-500 border-opacity-30 rounded-xl text-xs transition-all duration-200 hover:scale-105 flex items-center justify-center gap-1 shadow-lg group"
                   title="Download Resume"
                 >
                   <Download size={14} className="group-hover:animate-bounce" />
@@ -458,7 +470,7 @@ export function AIChatbot() {
                       games.map((game, index) => `${index + 1}. **${game.name}**: ${game.description}`).join("\n\n") +
                       "\n\nWhich game would you like to play? Just type the number or name!");
                   }}
-                  className="flex-1 px-3 py-2.5 bg-gradient-to-r from-black/70 to-black/50 hover:from-black/80 hover:to-black/60 backdrop-blur-md text-white border border-gray-500/30 rounded-xl text-xs transition-all duration-200 hover:scale-105 flex items-center justify-center gap-1 shadow-lg group"
+                  className="flex-1 px-3 py-2.5 bg-black bg-opacity-70 hover:bg-opacity-80 text-white border border-gray-500 border-opacity-30 rounded-xl text-xs transition-all duration-200 hover:scale-105 flex items-center justify-center gap-1 shadow-lg group"
                   title="Show Games"
                 >
                   <GamepadIcon size={14} className="group-hover:animate-pulse" />
@@ -466,7 +478,7 @@ export function AIChatbot() {
                 </button>
                 <button
                   onClick={handleSendMessage}
-                  className="flex-1 px-3 py-2.5 bg-gradient-to-r from-black/70 to-black/50 hover:from-black/80 hover:to-black/60 backdrop-blur-md text-white border border-gray-500/30 rounded-xl text-xs transition-all duration-200 hover:scale-105 shadow-lg group font-medium"
+                  className="flex-1 px-3 py-2.5 bg-black bg-opacity-70 hover:bg-opacity-80 text-white border border-gray-500 border-opacity-30 rounded-xl text-xs transition-all duration-200 hover:scale-105 shadow-lg group font-medium"
                 >
                   <span className="group-hover:animate-pulse">Send</span>
                 </button>
