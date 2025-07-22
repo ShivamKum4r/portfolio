@@ -39,12 +39,13 @@ export function RandomBackground() {
 
   return (
     <div 
-      className="fixed inset-0 z-[-1] opacity-10 dark:opacity-5 transition-all duration-1000 ease-in-out"
+      className="fixed inset-0 z-[-1] w-screen h-screen opacity-10 dark:opacity-5 transition-all duration-1000 ease-in-out"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
       }}
     />
   );
