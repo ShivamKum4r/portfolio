@@ -3,9 +3,12 @@
 import HeadingBadge from "@/components/heading-badge";
 import { IconBrandNextjs } from "@tabler/icons-react";
 import {
+  SiC,
+  SiCplusplus,
   SiExpress,
   SiMongodb,
   SiTypescript,
+  SiPostman
 } from "react-icons/si";
 import { IoLogoJavascript } from "react-icons/io";
 import {
@@ -17,6 +20,8 @@ import {
   FaNodeJs,
   FaPython,
   FaReact,
+  FaCode,
+  FaServer
 } from "react-icons/fa";
 import {
   RiFirebaseFill,
@@ -42,11 +47,12 @@ const skillCategories: SkillCategory[] = [
   {
     name: "Languages",
     skills: [
+      { name: "C++", icon: <SiCplusplus color="#00599C" /> },
+      { name: "C", icon: <SiC color="#A8B9CC" /> },
       { name: "Python", icon: <FaPython color="#3776AB" /> },
       { name: "JavaScript", icon: <IoLogoJavascript color="#F7DF1E" /> },
       { name: "TypeScript", icon: <SiTypescript color="#3178C6" /> },
-      { name: "C++", icon: <FaCss3 color="#00599C" /> },
-      { name: "C", icon: <FaHtml5 color="#A8B9CC" /> },
+      
     ],
   },
   {
@@ -69,8 +75,8 @@ const skillCategories: SkillCategory[] = [
       { name: "Docker", icon: <FaDocker color="#2496ED" /> },
       { name: "VS Code", icon: <VscVscode color="#007ACC" /> },
       { name: "GitHub", icon: <FaGithub color="#ffffff" /> },
-      { name: "Postman", icon: <RiDatabase2Fill color="#FF6C37" /> },
-      { name: "Streamlit", icon: <FaPython color="#FF4B4B" /> },
+      { name: "Postman", icon: <SiPostman color="#FF6C37" /> },
+      { name: "Streamlit", icon: <FaServer color="#FF4B4B" /> },
       { name: "Hugging Face", icon: <RiFirebaseFill color="#FFD21E" /> },
       { name: "FastAPI", icon: <FaPython color="#009688" /> },
     ],

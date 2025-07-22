@@ -19,34 +19,98 @@ const backgroundImages = [
 ];
 
 export function RandomBackground() {
-  const [backgroundImage, setBackgroundImage] = useState("");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [nextImageIndex, setNextImageIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Set initial random background
-    const getRandomImage = () => {
-      return backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+    // Check if device is mobile
+    const checkMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth <= 768);
+      }
     };
-    
-    setBackgroundImage(getRandomImage());
 
-    // Change background every 7 seconds
+    // Set initial values
+    checkMobile();
+    
+    // Preload images for smooth transitions
+    backgroundImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+    
+    setIsLoaded(true);
+
+    // Add resize listener for responsive behavior
+    window.addEventListener('resize', checkMobile);
+
+    // Change background every 7 seconds with smooth transition
     const interval = setInterval(() => {
-      setBackgroundImage(getRandomImage());
+      setIsTransitioning(true);
+      
+      setTimeout(() => {
+        setCurrentImageIndex(nextImageIndex);
+        setNextImageIndex((nextImageIndex + 1) % backgroundImages.length);
+        setIsTransitioning(false);
+      }, 500); // Half of transition duration
     }, 7000);
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [nextImageIndex]);
+
+  if (!isLoaded) return null;
+
+  const baseStyles = {
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: isMobile ? "scroll" : "fixed",
+  };
+
+  const mobileOptimizations = isMobile ? {
+    transform: "none",
+    willChange: "opacity" as const,
+  } : {
+    transform: "scale(1.02)",
+    willChange: "opacity, transform" as const,
+  };
 
   return (
-    <div 
-      className="fixed inset-0 z-[-1] w-screen h-screen opacity-20 dark:opacity-15 transition-all duration-1000 ease-in-out"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-      }}
-    />
+    <div className="fixed inset-0 z-[-1] w-full h-full overflow-hidden">
+      {/* Current background layer */}
+      <div 
+        className={`absolute inset-0 opacity-20 dark:opacity-15 transition-opacity duration-1000 ease-in-out ${
+          isTransitioning ? 'opacity-0' : 'opacity-20 dark:opacity-15'
+        }`}
+        style={{
+          backgroundImage: `url(${backgroundImages[currentImageIndex]})`,
+          ...baseStyles,
+          ...mobileOptimizations,
+        }}
+      />
+      
+      {/* Next background layer for smooth transition */}
+      <div 
+        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          isTransitioning ? 'opacity-20 dark:opacity-15' : 'opacity-0'
+        }`}
+        style={{
+          backgroundImage: `url(${backgroundImages[nextImageIndex]})`,
+          ...baseStyles,
+          ...mobileOptimizations,
+        }}
+      />
+
+      {/* Mobile performance overlay */}
+      {isMobile && (
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/5 to-transparent pointer-events-none" />
+      )}
+    </div>
   );
 }
