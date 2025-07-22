@@ -409,24 +409,31 @@ export function AIChatbot() {
         </div>
       </button>
 
-      {/* Chat window */}
+      {/* Chat window - Responsive */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 h-96 bg-black bg-opacity-85 border border-gray-500 border-opacity-30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
-          {/* Header */}
-          <div className="p-4 border-b border-gray-500 border-opacity-20 flex items-center gap-3 bg-black bg-opacity-50 relative">
+        <div className="fixed bottom-4 right-4 left-4 top-4 z-50 sm:bottom-24 sm:right-6 sm:left-auto sm:top-auto sm:w-96 sm:h-96 bg-black bg-opacity-85 border border-gray-500 border-opacity-30 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ease-in-out">
+          {/* Header - Responsive */}
+          <div className="p-3 sm:p-4 border-b border-gray-500 border-opacity-20 flex items-center gap-2 sm:gap-3 bg-black bg-opacity-50 relative">
             <div className="relative">
-              <Bot className="text-gray-300" size={20} />
+              <Bot className="text-gray-300" size={18} />
               <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             </div>
-            <div>
-              <h3 className="font-semibold text-white text-sm">Shivam&apos;s AI Assistant</h3>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-white text-sm truncate">Shivam&apos;s AI Assistant</h3>
               <p className="text-xs text-gray-400">Online & Ready to Help</p>
             </div>
-            <div className="ml-auto flex gap-1">
+            <div className="flex gap-1">
               <div className="w-1 h-4 bg-green-400 rounded-full animate-pulse"></div>
-              <div className="w-1 h-4 bg-gray-600 rounded-full"></div>
-              <div className="w-1 h-4 bg-gray-600 rounded-full"></div>
+              <div className="w-1 h-4 bg-green-400 rounded-full animate-pulse"></div>
+              <div className="w-1 h-4 bg-green-400 rounded-full animate-pulse"></div>
             </div>
+            {/* Close button for mobile */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="sm:hidden p-1 rounded-full hover:bg-gray-700 hover:bg-opacity-50 transition-colors"
+            >
+              <X size={16} className="text-gray-400" />
+            </button>
           </div>
 
           {/* Messages */}
