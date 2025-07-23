@@ -92,12 +92,12 @@ function generateResponse(message: string, info: {
 
   // Skills
   if (message.includes('skill') || message.includes('technology') || message.includes('tech stack')) {
-    return `Here are my current skills:\n\n💻 **Programming:** ${info.skills.slice(0, 4).join(', ')}\n🛠️ **Tools & Frameworks:** ${info.skills.slice(4, 8).join(', ')}\n📚 **Currently Learning:** Advanced React patterns, backend development, and cloud technologies\n\nI'm always excited to learn new technologies!`;
+    return `Here are my current skills:\n\n💻 Programming: ${info.skills.slice(0, 4).join(', ')}\n🛠️ Tools & Frameworks: ${info.skills.slice(4, 8).join(', ')}\n📚 Currently Learning: Advanced React patterns, backend development, and cloud technologies\n\nI'm always excited to learn new technologies!`;
   }
 
   // Projects
   if (message.includes('project') || message.includes('portfolio') || message.includes('work')) {
-    return `Here are some projects I've been working on:\n\n🚀 **${info.projects[0].name}:** ${info.projects[0].description}\n💡 **${info.projects[1].name}:** ${info.projects[1].description}\n\nI'm always working on new projects to improve my skills! Each project teaches me something new.`;
+    return `Here are some projects I've been working on:\n\n🚀 ${info.projects[0].name}: ${info.projects[0].description}\n💡 ${info.projects[1].name}: ${info.projects[1].description}\n\nI'm always working on new projects to improve my skills! Each project teaches me something new.`;
   }
 
   // Education/Learning
